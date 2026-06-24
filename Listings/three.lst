@@ -1,0 +1,36 @@
+A51 MACRO ASSEMBLER  THREE                                                                05/16/2026 09:50:00 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\three.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE three.asm SET(SMALL) DEBUG PRINT(.\Listings\three.lst) OBJECT(.\Objects
+                      \three.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 7429              1     MOV A,#29H
+0002 540F              2     ANL A,#0FH
+0004 F8                3     MOV R0,A
+0005 7429              4     MOV A,#29H
+0007 54F0              5     ANL A,#0F0H
+0009 C4                6     SWAP A
+000A 75F00A            7     MOV B,#0AH
+000D A4                8     MUL AB
+000E 28                9     ADD A,R0
+000F FD               10     MOV R5,A
+                      11     END
+A51 MACRO ASSEMBLER  THREE                                                                05/16/2026 09:50:00 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

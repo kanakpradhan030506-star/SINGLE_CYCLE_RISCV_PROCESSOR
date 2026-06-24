@@ -1,0 +1,46 @@
+A51 MACRO ASSEMBLER  FOUR                                                                 05/16/2026 10:48:58 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\four.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE four.asm SET(SMALL) DEBUG PRINT(.\Listings\four.lst) OBJECT(.\Objects\f
+                      our.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 7940              1     MOV R1,#40H
+0002 7A09              2     MOV R2,#9
+0004 7411              3     MOV A,#11H
+0006 13                4     UP:RRC A
+0007 F7                5     MOV @R1,A
+0008 09                6     INC R1
+0009 DAFB              7     DJNZ R2,UP
+000B 75F000            8     MOV B,#00H
+000E 7940              9     MOV R1,#40H
+0010 7B09             10     MOV R3,#9
+0012 E7               11     BACK:MOV A,@R1
+0013 20E002           12     JB ACC.0 ,DOWN
+0016 05F0             13     INC B
+0018 09               14     DOWN:INC R1
+0019 DBF7             15     DJNZ R3,BACK
+001B 85F050           16     MOV 50H,B
+                      17     END
+A51 MACRO ASSEMBLER  FOUR                                                                 05/16/2026 10:48:58 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0012H   A   
+DOWN . . . . . . .  C ADDR   0018H   A   
+UP . . . . . . . .  C ADDR   0006H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

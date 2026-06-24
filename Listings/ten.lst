@@ -1,0 +1,89 @@
+C51 COMPILER V9.60.7.0   TEN                                                               05/16/2026 09:42:25 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE TEN
+OBJECT MODULE PLACED IN .\Objects\ten.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ten.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\ten.l
+                    -st) TABS(2) OBJECT(.\Objects\ten.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          void msdelay(unsigned int );
+   3          void data1(unsigned char);
+   4          void cmd(unsigned char);
+   5          sfr x = 0x80;
+   6          sbit rs = P0^0;
+   7          sbit rw = P0^1;
+   8          sbit en = P0^2;
+   9          sbit buzzer = P2^2;
+  10          sbit by = P0^3;
+  11          void main (void)
+  12          {
+  13   1        x=0x00;
+  14   1        by=1;
+  15   1        buzzer=0;
+  16   1        cmd(0x28);
+  17   1        cmd(0x02);
+  18   1        cmd(0x0E);
+  19   1        cmd(0x01);
+  20   1        cmd(0x83);
+  21   1        data1('E');
+  22   1        data1('T');
+  23   1        data1('C');
+  24   1        cmd(0xc6);
+  25   1        data1('D');
+  26   1        data1('P');
+  27   1        data1('T');
+  28   1        while(1);
+  29   1      }
+  30          void cmd(unsigned char c){
+  31   1        x=(c & 0xF0);
+  32   1        rs=0;
+  33   1        rw=0;
+  34   1        en=1;
+  35   1        msdelay(250);
+  36   1        en=0;
+  37   1        x = ((c<<4)&0xF0);
+  38   1        rs=0;
+  39   1        rw=0;
+  40   1        en=1;
+  41   1        msdelay(250);
+  42   1        en=0;
+  43   1      }
+  44          void data1(unsigned char d){
+  45   1        x=(d &0xF0);
+  46   1        rs=1;
+  47   1        rw=0;
+  48   1        en=1;
+  49   1        msdelay(250);
+  50   1        en=0;
+  51   1        x=((d<<4)&0xF0);
+  52   1        rs=1;
+  53   1        rw=0;
+  54   1        en=1;
+C51 COMPILER V9.60.7.0   TEN                                                               05/16/2026 09:42:25 PAGE 2   
+
+  55   1        msdelay(250);
+  56   1        en=0;
+  57   1      }
+  58          void msdelay(unsigned int m){
+  59   1        unsigned int i , j ;
+  60   1        for (i=0;i<m;i++){
+  61   2          for (j=0;j<1275;j++){
+  62   3          }
+  63   2        }}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    163    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

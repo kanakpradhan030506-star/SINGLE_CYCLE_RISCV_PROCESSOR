@@ -1,0 +1,42 @@
+A51 MACRO ASSEMBLER  TWO                                                                  05/16/2026 10:02:06 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\two.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE two.asm SET(SMALL) DEBUG PRINT(.\Listings\two.lst) OBJECT(.\Objects\two
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0400                   1     ORG 0400H
+0400 95                2             DB 95H
+0401 0A                3             DB 10
+0402 88                4             DB 10001000B
+0403 48492059          5             DB "HI YCCE'"
+0407 43434527                
+0000                   6             ORG 000H
+0000 900400            7             MOV DPTR ,#0400H
+0003 7940              8         MOV R1,#40H
+0005 7A0A              9             MOV R2,#0AH
+0007 93               10             BACK: MOVC A ,@A+DPTR
+0008 F7               11             MOV @R1,A
+0009 A3               12             INC DPTR
+000A 09               13             INC R1
+000B E4               14             CLR A 
+000C DAF9             15             DJNZ R2,BACK
+                      16             END
+A51 MACRO ASSEMBLER  TWO                                                                  05/16/2026 10:02:06 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .  C ADDR   0007H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

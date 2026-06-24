@@ -1,0 +1,3 @@
+".\Objects\pir.obj" 
+TO ".\Objects\pir_project" 
+PRINT(".\Listings\pir_project.m51") RAMSIZE(256) 

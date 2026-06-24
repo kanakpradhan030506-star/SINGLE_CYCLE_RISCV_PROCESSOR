@@ -1,0 +1,4 @@
+".\Objects\toggling.obj",
+".\Objects\togging.obj" 
+TO ".\Objects\toggling" 
+PRINT(".\Listings\toggling.m51") RAMSIZE(256) 

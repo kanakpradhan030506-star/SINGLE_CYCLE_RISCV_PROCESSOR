@@ -1,0 +1,59 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    04/02/2026  13:32:07  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE pir.obj TO pir_project PRINT (.\Listings\pir_project.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  pir.obj (PIR)
+
+
+LINK MAP OF MODULE:  pir_project (PIR)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     001AH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  pir_project (PIR)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        PIR
+  C:0013H         SYMBOL        D1
+  C:0015H         SYMBOL        D2
+  C:0011H         SYMBOL        DELAY
+  C:0002H         SYMBOL        LOOP
+  C:000BH         SYMBOL        NEXT
+  D:0090H         SYMBOL        P1
+  D:00A0H         SYMBOL        P2
+  C:0000H         LINE#         3
+  C:0002H         LINE#         5
+  C:0005H         LINE#         6
+  C:0007H         LINE#         7
+  C:0009H         LINE#         8
+  C:000BH         LINE#         10
+  C:000DH         LINE#         11
+  C:000FH         LINE#         12
+  C:0011H         LINE#         14
+  C:0013H         LINE#         15
+  C:0015H         LINE#         16
+  C:0017H         LINE#         17
+  C:0019H         LINE#         18
+  -------         ENDMOD        PIR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 001AH BYTE ( 1%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=26
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

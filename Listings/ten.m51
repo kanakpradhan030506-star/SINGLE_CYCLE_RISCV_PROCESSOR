@@ -1,0 +1,161 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    05/16/2026  09:42:25  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\ten.obj TO .\Objects\ten PRINT (.\Listings\ten.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\ten.obj (TEN)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\ten (TEN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0045H     UNIT         ?PR?MAIN?TEN
+            CODE    0845H     002EH     UNIT         ?PR?_MSDELAY?TEN
+            CODE    0873H     001EH     UNIT         ?PR?_DATA1?TEN
+            CODE    0891H     0012H     UNIT         ?PR?_CMD?TEN
+            CODE    08A3H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\ten (TEN)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?TEN
+
+?PR?MAIN?TEN                   -----    -----
+  +--> ?PR?_CMD?TEN
+  +--> ?PR?_DATA1?TEN
+
+?PR?_CMD?TEN                   0008H    0001H
+  +--> ?PR?_MSDELAY?TEN
+
+?PR?_DATA1?TEN                 0008H    0001H
+  +--> ?PR?_MSDELAY?TEN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\ten (TEN)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/16/2026  09:42:25  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        TEN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  B:00A0H.2       PUBLIC        buzzer
+  C:0800H         PUBLIC        main
+  C:0891H         PUBLIC        _cmd
+  C:0873H         PUBLIC        _data1
+  B:0080H.2       PUBLIC        en
+  B:0080H.3       PUBLIC        by
+  B:0080H.0       PUBLIC        rs
+  B:0080H.1       PUBLIC        rw
+  C:0853H         PUBLIC        _msdelay
+  D:0080H         PUBLIC        x
+  -------         PROC          MAIN
+  C:0800H         LINE#         11
+  C:0800H         LINE#         12
+  C:0800H         LINE#         13
+  C:0803H         LINE#         14
+  C:0805H         LINE#         15
+  C:0807H         LINE#         16
+  C:080CH         LINE#         17
+  C:0811H         LINE#         18
+  C:0816H         LINE#         19
+  C:081BH         LINE#         20
+  C:0820H         LINE#         21
+  C:0825H         LINE#         22
+  C:082AH         LINE#         23
+  C:082FH         LINE#         24
+  C:0834H         LINE#         25
+  C:0839H         LINE#         26
+  C:083EH         LINE#         27
+  C:0843H         LINE#         28
+  -------         ENDPROC       MAIN
+  -------         PROC          _CMD
+  D:0008H         SYMBOL        c
+  C:0891H         LINE#         30
+  C:0893H         LINE#         31
+  C:0895H         LINE#         32
+  C:0895H         LINE#         33
+  C:0895H         LINE#         34
+  C:0895H         LINE#         35
+  C:0898H         LINE#         36
+  C:089AH         LINE#         37
+  C:089DH         LINE#         38
+  C:089DH         LINE#         39
+  C:089DH         LINE#         40
+  C:089DH         LINE#         41
+  C:08A0H         LINE#         42
+  C:08A2H         LINE#         43
+  -------         ENDPROC       _CMD
+  -------         PROC          _DATA1
+  D:0008H         SYMBOL        d
+  C:0873H         LINE#         44
+  C:0875H         LINE#         45
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/16/2026  09:42:25  PAGE 3
+
+
+  C:087BH         LINE#         46
+  C:087DH         LINE#         47
+  C:087DH         LINE#         48
+  C:087DH         LINE#         49
+  C:0880H         LINE#         50
+  C:0882H         LINE#         51
+  C:0889H         LINE#         52
+  C:088BH         LINE#         53
+  C:088BH         LINE#         54
+  C:088BH         LINE#         55
+  C:088EH         LINE#         56
+  C:0890H         LINE#         57
+  -------         ENDPROC       _DATA1
+  C:084BH         SYMBOL        L?0016
+  -------         PROC          L?0015
+  -------         ENDPROC       L?0015
+  C:084BH         SYMBOL        L?0016
+  -------         PROC          _MSDELAY
+  D:0006H         SYMBOL        m
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0853H         LINE#         58
+  C:0853H         LINE#         60
+  C:085DH         LINE#         61
+  C:0860H         LINE#         62
+  C:086BH         LINE#         63
+  -------         ENDPROC       _MSDELAY
+  -------         ENDMOD        TEN
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00A3H BYTE ( 7%) *
+******************************************************************************
+
+Program Size: data=10.0 xdata=0 code=178
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

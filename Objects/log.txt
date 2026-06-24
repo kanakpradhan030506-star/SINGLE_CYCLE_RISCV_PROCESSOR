@@ -1,0 +1,12 @@
+
+APP Version : 13.16   Model : TL866II Plus
+     Device : AT89S52 @PLCC44
+
+ No Programmer Found.
+ 
+AT89S52 @PLCC44
+  Memory Size : 0x00002000
+
+Demo running as TL866II Plus Programmer
+load File: C:\Users\Kanak Pradhan\Desktop\Objects\toggling.hex
+load File: C:\Users\Kanak Pradhan\Desktop\Objects\toggling.hex

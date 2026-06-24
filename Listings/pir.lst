@@ -1,0 +1,50 @@
+A51 MACRO ASSEMBLER  PIR                                                                  04/02/2026 13:20:37 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN pir.OBJ
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE pir.asm SET(SMALL) DEBUG PRINT(.\Listings\pir.lst) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1      ORG 0000H
+                       2     
+0000 C2A0              3     CLR P2.0
+                       4     
+0002 209006            5     LOOP: JB P1.0, NEXT
+0005 C2A0              6           CLR P2.0
+0007 1111              7           ACALL DELAY
+0009 80F7              8           SJMP LOOP
+                       9     
+000B D2A0             10     NEXT: SETB P2.0
+000D 1111             11           ACALL DELAY
+000F 80F1             12           SJMP LOOP
+                      13     
+0011 7AC8             14     DELAY: MOV R2, #200
+0013 7BFF             15     D1:    MOV R3, #255
+0015 DBFE             16     D2:    DJNZ R3, D2
+0017 DAFA             17            DJNZ R2, D1
+0019 22               18            RET
+                      19     
+                      20     END
+A51 MACRO ASSEMBLER  PIR                                                                  04/02/2026 13:20:37 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+D1 . . . . . . . .  C ADDR   0013H   A   
+D2 . . . . . . . .  C ADDR   0015H   A   
+DELAY. . . . . . .  C ADDR   0011H   A   
+LOOP . . . . . . .  C ADDR   0002H   A   
+NEXT . . . . . . .  C ADDR   000BH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,11 @@
+**Phase One: Combinational Logic.** DONE
+**Phase Two: Sequential Logic.**  synchronous counter, ring counter
+**Phase Three: State Machines.** DONE
+**Phase Four: Memory and Bus.**  DONE
+**Phase Five: Datapath and ALU.** DONE
+**Phase Six: Instruction Fetch and Decode.**  DONE
+**Phase Seven: Control Unit.** DONE
+
+**Phase Eight: Complete RISC-V Processor.** Full single-cycle datapath with program counter, instruction fetch, register file, ALU, memory interface, control unit all integrated together, then test it with simple RISC-V programs like addition, subtraction, loops, and conditional branches.
+
+

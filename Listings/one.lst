@@ -1,0 +1,33 @@
+A51 MACRO ASSEMBLER  ONE                                                                  05/16/2026 09:53:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\one.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE one.asm SET(SMALL) DEBUG PRINT(.\Listings\one.lst) OBJECT(.\Objects\one
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 7426              1     MOV A,#26H
+0002 75F005            2     MOV B,#05H
+0005 25F0              3     ADD A,B
+0007 FF                4     MOV R7,A
+0008 F540              5     MOV 40H,A
+000A F590              6     MOV P1,A
+                       7     END
+A51 MACRO ASSEMBLER  ONE                                                                  05/16/2026 09:53:47 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

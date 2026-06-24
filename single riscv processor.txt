@@ -1,0 +1,318 @@
+module alu_32bit(input [31:0] A, input [31:0] B, input [2:0] alu_sel, output reg [31:0] result);
+always @(*) begin
+    case(alu_sel)
+        3'b000: result = A + B;
+        3'b001: result = A - B;
+        3'b010: result = A & B;
+        3'b011: result = A | B;
+        3'b100: result = A ^ B;
+        3'b101: result = ~A;
+        3'b110: result = A << 1;
+        3'b111: result = A >> 1;
+        default: result = 32'b0;
+    endcase
+end
+endmodule
+module alu_control(input [1:0] alu_op,input [2:0] func3,input [6:0] func7,output reg [2:0] alu_sel);
+always @(*) begin
+    case(alu_op)
+        2'b00: alu_sel = 3'b000;   // addi, lw, sw
+        2'b01: alu_sel = 3'b001;   // beq 
+        2'b10: begin               // R-Type
+            case(func3)
+                3'b000: begin
+                    if(func7 == 7'b0100000)
+                        alu_sel = 3'b001;// sub
+                    else
+                        alu_sel = 3'b000;// add
+                end
+                3'b111: alu_sel = 3'b010;// and
+                3'b110: alu_sel = 3'b011;// or
+                default: alu_sel = 3'b000;
+            endcase
+        end
+
+        default: alu_sel = 3'b000;
+    endcase
+end
+
+endmodule
+module complete_riscv_decoder(input [31:0] instruction,output reg [6:0] opcode,output reg [4:0] destination_reg,output reg [2:0] func3,output reg [4:0] source_reg_1,output reg [4:0] source_reg_2,
+output reg [6:0] func7,
+output reg [31:0] immediate
+);
+
+always @(*) begin
+opcode = instruction[6:0];
+destination_reg = 0;
+func3 = 0;
+source_reg_1 = 0;
+source_reg_2 = 0;
+func7 = 0;
+immediate = 0;
+case(opcode)
+7'b0110011: begin          // R TYPE
+    destination_reg = instruction[11:7];
+    func3 = instruction[14:12];
+    source_reg_1 = instruction[19:15];
+    source_reg_2 = instruction[24:20];
+    func7 = instruction[31:25];
+end
+7'b0010011: begin          // I TYPE  
+    destination_reg = instruction[11:7];
+    func3 = instruction[14:12];
+    source_reg_1 = instruction[19:15];
+    immediate = instruction[31:20];
+end
+7'b0100011: begin          // S TYPE 
+    func3 = instruction[14:12];
+    source_reg_1 = instruction[19:15];
+    source_reg_2 = instruction[24:20];
+    immediate = {instruction[31:25], instruction[11:7]};
+end
+7'b1100011: begin
+    func3 = instruction[14:12];
+    source_reg_1 = instruction[19:15];
+    source_reg_2 = instruction[24:20];
+    immediate = {instruction[31], instruction[7], instruction[30:25], instruction[11:8]};
+end
+default:
+ begin
+    destination_reg = 0;
+    func3 = 0;
+    source_reg_1 = 0;
+    source_reg_2 = 0;
+    func7 = 0;
+    immediate = 0;
+end
+endcase
+end
+endmodule
+module control_signal_generator(input [6:0] opcode,output reg reg_write,output reg mem_read,output reg mem_write,output reg alu_src,output reg branch,
+output reg [1:0] alu_op);
+always @(*) begin
+
+reg_write = 0;
+mem_read = 0;
+mem_write = 0;
+alu_src = 0;
+branch = 0;
+alu_op = 2'b00;
+
+case(opcode)
+7'b0110011: begin
+    reg_write = 1;
+    alu_src = 0;
+    alu_op = 2'b10;
+end
+7'b0010011: begin
+    reg_write = 1;
+    alu_src = 1;
+    alu_op = 2'b00;
+end
+7'b0000011: begin
+    reg_write = 1;
+    mem_read = 1;
+    alu_src = 1;
+    alu_op = 2'b00;
+end
+7'b0100011: begin
+    mem_write = 1;
+    alu_src = 1;
+    alu_op = 2'b00;
+end
+7'b1100011: begin
+    branch = 1;
+    alu_src = 0;
+    alu_op = 2'b01;
+end
+endcase
+end
+endmodule
+module immediate_generator( input [31:0] instruction , output reg [31:0] immediate);
+  always @(*)
+    begin
+      case(instruction)
+         7'b0010011 , 7'b0000011 :
+           begin //I TYPE (addi , lw)
+             immediate = {{20{instruction[31]}},instruction[31:25]};
+           end
+        7'b0100011:
+        begin //S TYPE
+          immediate = {{20{instruction[31]}},instruction[31:25] , instruction[11:7]};
+        end
+        7'b1100011:
+          begin //B TYPE
+            immediate = {{19{instruction[31]}}, instruction[31] , instruction[7] , instruction[30:25] , instruction[11:8],1'b0};
+          end
+        default:
+          immediate = 32'b0;
+      endcase
+    end
+endmodule
+                        
+                    
+module instruction_memory(input [31:0] pc,output reg [31:0] instruction);
+reg [31:0] memory[0:15];
+initial begin
+    memory[0] = 32'h003100B3;
+    memory[1] = 32'h00510113;
+    memory[2] = 32'h00112023;
+    memory[3] = 32'h00000063;
+end
+always @(*) begin
+    if(pc[5:2] < 4)
+        instruction = memory[pc[5:2]];
+    else
+        instruction = 32'b0;
+end
+endmodule
+
+module processor_top(input clk, input reset);
+wire [31:0] instruction;
+wire [31:0] immediate;
+wire [31:0] result;
+wire reg_write;
+wire mem_read;
+wire mem_write;
+wire alu_src;
+wire branch;
+wire [31:0] pc;
+wire [6:0] opcode;
+wire [4:0] destination_reg;
+wire [2:0] func3;
+wire [4:0] source_reg_1;
+wire [4:0] source_reg_2;
+wire [6:0] func7;
+wire [1:0] alu_op;
+wire [2:0] alu_sel;
+wire [31:0] A;
+wire [31:0] B;
+wire [31:0] read_data1;
+wire [31:0] read_data2;
+wire [31:0] address;
+wire [31:0] read_data;
+wire [31:0] mem_write_data;
+wire [31:0] reg_write_data;
+  
+assign A = read_data1;
+
+assign B = (alu_src) ? immediate : read_data2;
+
+assign address = result;
+
+assign mem_write_data = read_data2;
+
+assign reg_write_data = (mem_read) ? read_data : result;
+
+program_counter pc1(.clk(clk),.reset(reset),.pc(pc));
+
+  instruction_memory im1(.pc(pc),.instruction(instruction));
+
+complete_riscv_decoder crd(.instruction(instruction),.opcode(opcode),.destination_reg(destination_reg),.func3(func3),.source_reg_1(source_reg_1),.source_reg_2(source_reg_2),.func7(func7),.immediate(immediate));
+
+register_file rf1(.clk(clk),.reg_write(reg_write),.source_reg_1(source_reg_1),.source_reg_2(source_reg_2),.destination_reg(destination_reg),.write_data(reg_write_data),.read_data1(read_data1),.read_data2(read_data2));
+
+alu_control ac1(.alu_op(alu_op),.func3(func3), .func7(func7),.alu_sel(alu_sel));
+
+data_memory dm1(.clk(clk),.mem_read(mem_read),.mem_write(mem_write),.write_data(mem_write_data),.address(address),.read_data(read_data));
+                                                                              
+ alu_32bit alu1(.A(A) ,.B(B) ,.alu_sel(alu_sel) ,.result(result));
+  
+ control_signal_generator csg(.opcode(opcode),.reg_write(reg_write),.mem_read(mem_read),.mem_write(mem_write),.alu_src(alu_src),.branch(branch),.alu_op(alu_op));
+  
+endmodule
+module program_counter(input clk,input reset,output reg [31:0] pc);
+always @(posedge clk or posedge reset) begin
+    if(reset)
+        pc <= 0;
+    else
+        pc <= pc + 4;
+end
+endmodule
+
+module register_file(input clk,input reg_write,input [4:0] source_reg_1,input [4:0] source_reg_2,input [4:0] destination_reg,input [31:0] write_data,output [31:0] read_data1,output [31:0] read_data2);
+reg [31:0] registers[31:0];
+integer i;
+initial begin
+    for(i=0;i<32;i=i+1)
+        registers[i] = 0;
+end
+always @(posedge clk) begin
+    if(reg_write && destination_reg != 0)
+        registers[destination_reg] <= write_data;
+end
+assign read_data1 = (source_reg_1 == 0) ? 0 : registers[source_reg_1];
+assign read_data2 = (source_reg_2 == 0) ? 0 : registers[source_reg_2];
+endmodule
+
+## Single Cycle RISC-V Processor
+
+This project implements a basic 32-bit Single Cycle RISC-V Processor in Verilog HDL. The processor executes instructions by completing fetch, decode, execute, memory access, and write-back operations within a single clock cycle.
+
+The design integrates multiple processor modules including ALU, Register File, Program Counter, Instruction Memory, Data Memory, Instruction Decoder, ALU Control, and Control Signal Generator.
+
+The processor currently supports execution of R-Type, I-Type, S-Type, and basic B-Type instructions. Simulation waveforms were used to verify instruction flow, control signal generation, ALU operations, memory access, and register write-back.
+
+The project demonstrates understanding of processor architecture, datapath integration, instruction decoding, and hardware design using Verilog HDL.
+
+module processor_top_tb;
+reg clk, reset;
+processor_top uut(.clk(clk),.reset(reset));
+always #5 clk = ~clk;
+initial begin
+  $dumpfile("processor_top.vcd");
+  $dumpvars(0, processor_top_tb);
+    clk = 0;
+    reset = 1;
+    #10;
+    reset = 0;
+    #100;
+  $finish;
+end
+endmodule
+
+# Single Cycle RISC-V Processor (Verilog)
+
+A basic 32-bit Single Cycle RISC-V Processor designed in Verilog HDL by integrating core processor components and simulating instruction execution in a single clock cycle architecture.
+
+## Features
+
+- 32-bit ALU for arithmetic and logic operations
+- Register File with 32 registers
+- Program Counter (PC) for instruction sequencing
+- Instruction Memory for instruction fetch
+- Data Memory for load or store operations
+- Complete RISC-V Instruction Decoder
+- Control Signal Generator
+- ALU Control Unit
+- Top Module Integration of all processor blocks
+- Simulation and waveform verification
+
+## Supported Instruction Types
+
+- R-Type (ADD, SUB, AND, OR)
+- I-Type (ADDI)
+- S-Type (Store Word)
+- B-Type (Branch decode support)
+
+## Project Structure
+
+SINGLE-CYCLE-RISCV-PROCESSOR/
+│── design/
+│── testbench/
+│── waveform/
+│── docs/
+└── README.md
+
+## Tools Used
+Verilog HDL
+VS Code
+EDA Playground
+GTKWave for waveform analysis
+
+## Future Improvements
+Branch execution logic
+Zero flag generation
+PC branch update logic
+Full instruction set support

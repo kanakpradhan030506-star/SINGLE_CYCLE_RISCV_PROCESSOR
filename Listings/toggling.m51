@@ -1,0 +1,146 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    04/06/2026  12:06:47  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\toggling.obj, .\Objects\togging.obj TO .\Objects\toggling PRINT (.\Listings\toggli
+>> ng.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\toggling.obj (TOGGLING)
+  .\Objects\togging.obj (TOGGING)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\toggling (TOGGLING)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     001DH     UNIT         ?PR?DELAY?TOGGLING
+            CODE    081DH     001DH     UNIT         ?PR?DELAY?TOGGING
+            CODE    083AH     0010H     UNIT         ?PR?MAIN?TOGGLING
+            CODE    084AH     0010H     UNIT         ?PR?MAIN?TOGGING
+            CODE    085AH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\toggling (TOGGLING)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?TOGGLING
+
+?PR?MAIN?TOGGLING
+  +--> ?PR?DELAY?TOGGLING
+
+
+
+IGNORED SYMBOLS:
+   DELAY
+   MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\toggling (TOGGLING)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/06/2026  12:06:47  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        TOGGLING
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  B:0090H.1       PUBLIC        LED1
+  B:0090H.2       PUBLIC        LED2
+  C:0800H         PUBLIC        delay
+  C:083AH         PUBLIC        main
+  -------         PROC          DELAY
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0800H         LINE#         6
+  C:0800H         LINE#         8
+  C:0803H         LINE#         9
+  C:081CH         LINE#         10
+  -------         ENDPROC       DELAY
+  -------         PROC          MAIN
+  C:083AH         LINE#         12
+  C:083AH         LINE#         13
+  C:083AH         LINE#         14
+  C:083CH         LINE#         15
+  C:083EH         LINE#         16
+  C:0841H         LINE#         18
+  C:0843H         LINE#         19
+  C:0845H         LINE#         20
+  C:0848H         LINE#         21
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        TOGGLING
+
+  -------         MODULE        TOGGING
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  B:0090H.1       PUBLIC        LED1
+  B:0090H.2       PUBLIC        LED2
+  C:081DH         PUBLIC        delay
+  C:084AH         PUBLIC        main
+  -------         PROC          DELAY
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:081DH         LINE#         6
+  C:081DH         LINE#         8
+  C:0820H         LINE#         9
+  C:0839H         LINE#         10
+  -------         ENDPROC       DELAY
+  -------         PROC          MAIN
+  C:084AH         LINE#         12
+  C:084AH         LINE#         13
+  C:084AH         LINE#         14
+  C:084CH         LINE#         15
+  C:084EH         LINE#         16
+  C:0851H         LINE#         18
+  C:0853H         LINE#         19
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/06/2026  12:06:47  PAGE 3
+
+
+  C:0855H         LINE#         20
+  C:0858H         LINE#         21
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        TOGGING
+
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  MAIN
+    MODULE:  .\Objects\togging.obj (TOGGING)
+
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  DELAY
+    MODULE:  .\Objects\togging.obj (TOGGING)
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MAIN?TOGGING
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 005AH BYTE ( 4%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=105
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  2 ERROR(S)
